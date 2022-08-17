@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { dataEnv } from '../config/envData.js';
 import { getusers } from '../model/users.js';
 
 const router = Router();
@@ -15,7 +15,7 @@ const user_login = async (req, res) => {
                 const token = jwt.sign({
                     sub: user. nombreDirector,
                     id: user.Id,
-                }, 'secret', { expiresIn: '30m' }, data.parsed.JWT_TOKEN_SECRET, { algorithm: 'HS256' })
+                }, 'secret', { expiresIn: '30m' }, dataEnv.parsed.JWT_TOKEN_SECRET, { algorithm: 'HS256' })
                 user.token = token;
 
                 res.header('auth-token', token).json({
