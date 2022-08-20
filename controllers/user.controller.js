@@ -1,10 +1,17 @@
 import { Router } from 'express';
 import { dataEnv } from '../config/envData.js';
 import { getusers } from '../model/users.js';
+import bodyParser from "body-parser";
+import jwt from 'jsonwebtoken';
+
+
 
 const router = Router();
 
-router.post('/login', (req, res) =>user_login(req, res));
+const jsonParser = bodyParser.json();
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 
 const user_login = async (req, res) => {
     const user = await getusers.findOne({ where: { email: req.body.email } });
@@ -38,4 +45,34 @@ const user_login = async (req, res) => {
 
 };
 
-export default router;
+// {
+//     "Carrera" : "Software",
+//     "nombreDirector" : "Carlos",
+//     "email" : "cdiaz@ids.upchiapas.edu.mx",
+//     "Password": "123456789"
+//   }
+
+const user_create = async (req,res) => {
+    const carrera = req.body.carrera;
+    const nombreDirector = req.body.nombreDirector;
+    const email = req.body.email;
+    const Password = req.body.Password;
+
+    getusers.create ({
+        carrera,
+        nombreDirector,
+        email,
+        Password
+    },
+    {fields: ["carrera", "nombreDirector", "email", "Password"]})
+    .then(users => {
+        res.send(users);
+    })
+    .catch((err)=> {
+        console.log(err);
+    })
+
+};
+
+ 
+export const userController = { user_create, user_login};

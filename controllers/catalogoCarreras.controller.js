@@ -1,11 +1,11 @@
 import { Router } from 'express';
 
-import { getDocente } from '../model/docentes.js';
+import { getCatalogo } from '../model/catalogoCarreras.js';
 
 const router = Router();
 
-router.get('/all_docentes', async function (req, res) {
-    getDocente.findAll({ 
+const catalogo_view = async(req, res) => {
+    getCatalogo.findAll({ 
         // include:{
         //     model:getTesisPre,
         //     attributes:['name','lastNamef','lastNamem','age']
@@ -17,11 +17,11 @@ router.get('/all_docentes', async function (req, res) {
         .catch(err => {
             console.log(err)
         })
-});
+    }
 
-router.post('/create_docentes', async function (req, res) {
+    const catalogo_create = async(req, res) => {
 
-    getDocente.create({
+        getCatalogo.create({
         nombreDocente: req.query.nombreDocente,
         idCarrera: req.query.idCarrera
     })
@@ -31,6 +31,6 @@ router.post('/create_docentes', async function (req, res) {
         .catch((err) => {
             console.log(err);
         });
-});
+}
 
-export default router;
+export const catalogoController = {catalogo_view,catalogo_create};

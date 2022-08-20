@@ -3,7 +3,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get('/all_son_orm', async function (req, res) {
+const son_view = async (req,res) => {
     getIngAmbiental.findAll({ attributes: ['IdAmbiental'] })
         .then(son => {
             res.send(son)
@@ -11,6 +11,6 @@ router.get('/all_son_orm', async function (req, res) {
         .catch(err => {
             console.log(err)
         })
-});
+}
 
-export default router;
+export const IngAmbientalController = {son_view};

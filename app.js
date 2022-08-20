@@ -1,28 +1,33 @@
 import express from 'express';
+import swaggerDocs from './config/swagger.config.js';
 import { api } from './config/Config.js';
-import catalagoCa from './router/rcatalogoCarreras.js';
-import docente from './router/rdocente.js';
-import users from './router/user.controller.js'
+
+//Usuarios
+import catalagoCa from './routes/catalogoCarreras.routes.js';
+import docente from './routes/docente.routes.js';
+import users from './routes/user.routes.js'
 
 //carreras
-import IngAgro from './router/rIngAgro.js';
-import IngAmbiental from './router/rIngAmbiental.js';
-import IngBio from './router/rIngBio.js';
-import IngEnergia from './router/rIngEnergia.js';
-import IngManu from './router/rIngManu.js';
-import IngMeca from './router/rIngMeca.js';
-import IngNano from './router/rIngNano.js';
-import IngPetro from './router/rIngPetro.js';
-import IngSoftware from './router/rIngSoftware.js';
-import LicAdmin from './router/rLicAdmin.js';
+import IngAgro from './routes/IngAgro.routes.js';
+import IngAmbiental from './routes/IngAmbiental.routes.js';
+import IngBio from './routes/IngBio.routes.js';
+import IngEnergia from './routes/IngEnergia.routes.js';
+import IngManu from './routes/IngManu.routes.js';
+import IngMeca from './routes/IngMeca.routes.js';
+import IngNano from './routes/IngNano.routes.js';
+import IngPetro from './routes/IngPetro.routes.js';
+import IngSoftware from './routes/IngSoftware.routes.js';
+import LicAdmin from './routes/LicAdmin.routes.js';
 
 //postgradosimport PostBio from './router/PostBio.js';import PostDocIng from './router/PostBio.js';
-import PostEnergia from './router/rPostEnergia.js';
-import PostBio from './router/rPostBio.js';
-import PostDocIng from './router/rPostDocIng.js';
+import PostEnergia from './routes/PostEnergia.routes.js';
+import PostBio from './routes/PostBio.routes.js';
+import PostDocIng from './routes/PostDocIng.routes.js';
 
 
 const app = express();
+
+app.use(express.json());
 
 app.use('/api/users', users)
 app.use('/api/catalogo',catalagoCa);
@@ -42,5 +47,6 @@ app.use('/api/PostDocIng',PostDocIng);
 app.use('/api/PostEnergia',PostEnergia);
 
 app.listen(api.port,()=>{
-    console.log('server running on port=>',api.port);
+    console.log(`Servidor corriento en el puerto => ${api.port}`);
+    swaggerDocs(app, api.port);
 });

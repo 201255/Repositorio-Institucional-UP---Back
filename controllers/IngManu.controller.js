@@ -1,16 +1,15 @@
-import { getBio } from "../model/IngBio.js";
+import { getManu } from "../model/IngManu.js";
 import { Router } from "express";
 
 const router = Router();
-
-router.get('/all_son_orm', async function (req, res) {
-    getBio.findAll({ attributes: ['IdAmbiental'] })
+const son_view = async (req,res) => {
+    getManu.findAll({ attributes: ['IdAmbiental'] })
         .then(son => {
             res.send(son)
         })
         .catch(err => {
             console.log(err)
         })
-});
+}
 
-export default router;
+export const IngManuController = {son_view};

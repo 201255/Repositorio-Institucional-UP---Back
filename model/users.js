@@ -1,4 +1,4 @@
-import { getData } from "./db.js";
+import { getData } from "../config/connection.config.js";
 import { DataTypes } from 'sequelize';
 import bcrypt from "bcrypt";
 
@@ -10,7 +10,7 @@ const users = getData.sequelizeClient.define('users', {
         allowNull: false,
         primaryKey: true
     },
-    Carrera:{
+    carrera:{
         type:DataTypes.STRING,
         allowNull:false
     },

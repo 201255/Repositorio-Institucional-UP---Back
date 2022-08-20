@@ -1,4 +1,4 @@
-import { getData } from "./db.js";
+import { getData } from "../config/connection.config.js";
 import { DataTypes } from 'sequelize';
 
 const docente = getData.sequelizeClient.define('docente', {
