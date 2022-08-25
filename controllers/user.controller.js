@@ -3,6 +3,7 @@ import { dataEnv } from '../config/envData.js';
 import { getusers } from '../model/users.js';
 import bodyParser from "body-parser";
 import jwt from 'jsonwebtoken';
+import bcryptjs from 'bcryptjs';
 
 
 
@@ -17,7 +18,7 @@ const user_login = async (req, res) => {
     const user = await getusers.findOne({ where: { email: req.body.email } });
     if (user) {
         const validPassword = bcryptjs.compareSync(req.body.Password, user.Password);
-        if (user.validat === true) {
+        
             if (validPassword) {
                 const token = jwt.sign({
                     sub: user. nombreDirector,
@@ -34,9 +35,7 @@ const user_login = async (req, res) => {
             else {
                 return res.status(400).json({ error: 'contraseña no válida' })
             }
-        } else {
-            return res.status(400).json({ error: "Usuario no verificado" });
-        }
+        
     }
     else {
         return res.status(400).json({ error: 'Usuario no encontrado' });
@@ -45,12 +44,6 @@ const user_login = async (req, res) => {
 
 };
 
-// {
-//     "Carrera" : "Software",
-//     "nombreDirector" : "Carlos",
-//     "email" : "cdiaz@ids.upchiapas.edu.mx",
-//     "Password": "123456789"
-//   }
 
 const user_create = async (req,res) => {
     const carrera = req.body.carrera;
@@ -74,5 +67,18 @@ const user_create = async (req,res) => {
 
 };
 
+const user_update = (req, res) => {
+    const email = req.body.email
+    getusers.findOne({ where: { email: email } })
+        .then(users => {
+            users.update({ Password: bcryptjs.hashSync(req.body.Password, 10) })
+            res.status(200).json({ err: 'contraseña Actualizada' })
+            // res.send(users);
+        })
+        .catch((err) => {
+            res.status(400).json({ err: 'contraseña No Actualizado' })
+        });
+};
+
  
-export const userController = { user_create, user_login};
+export const userController = { user_create, user_login, user_update};

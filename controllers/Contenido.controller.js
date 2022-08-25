@@ -1,10 +1,8 @@
-import { getIngAmbiental } from "../model/IngAmbiental.js"
+import { getContenido } from "../model/Contenido.model.js";
 import { Router } from "express";
 
-const router = Router();
-
 const son_view = async (req,res) => {
-    getIngAmbiental.findAll({ attributes: ['IdAmbiental'] })
+    getContenido.findAll({ attributes: ['Id'] })
         .then(son => {
             res.send(son)
         })
@@ -13,4 +11,4 @@ const son_view = async (req,res) => {
         })
 }
 
-export const IngAmbientalController = {son_view};
+export const ContenidoController = {son_view};

@@ -1,4 +1,4 @@
-import { getPostEnergia } from "../model/PostEnergia.js";
+import { getTesisM } from "../model/TesisM.model.js";
 import { Router } from "express";
 import { dataEnv } from '../config/envData.js';
 import bodyParser from "body-parser";
@@ -16,7 +16,7 @@ const router = Router();
 // });
 
 const son_view = async (req,res) => {
-    getPostEnergia.findAll({ attributes: ['IdAmbiental'] })
+    getTesisLic.findAll({ attributes: ['Id'] })
         .then(son => {
             res.send(son)
         })
@@ -25,4 +25,4 @@ const son_view = async (req,res) => {
         })
 }
 
-export const postEController = {son_view};
+export const TesisM = {son_view};
