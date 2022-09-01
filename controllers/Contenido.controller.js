@@ -1,5 +1,8 @@
 import { getContenido } from "../model/Contenido.model.js";
 import { getTesisLic } from "../model/TesisLic.model.js";
+import { getTesisM } from "../model/TesisM.model.js";
+import { getTesisDoctorado } from "../model/TesisDoc.model.js";
+
 import { Router } from "express";
 
 const contenido_create = async (req,res) => {
@@ -26,6 +29,36 @@ const contenido_view = async (req,res) => {
     getContenido.findAll({
         include :{
             model: getTesisLic,
+            attributes:['carrera','directorTesis','coDirector']
+        },
+        attributes:['Id','titulo','autor', 'fecha', 'enlaceDocumento']})
+    .then(contenido => {
+        res.send(contenido)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+const contenido_viewM = async (req,res) => {
+    getContenido.findAll({
+        include :{
+            model: getTesisM,
+            attributes:['carrera','directorTesis','coDirector']
+        },
+        attributes:['Id','titulo','autor', 'fecha', 'enlaceDocumento']})
+    .then(contenido => {
+        res.send(contenido)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+const contenido_viewD = async (req,res) => {
+    getContenido.findAll({
+        include :{
+            model: getTesisDoctorado,
             attributes:['carrera','directorTesis','coDirector']
         },
         attributes:['Id','titulo','autor', 'fecha', 'enlaceDocumento']})
@@ -65,4 +98,4 @@ const contenido_update = async (req,res) => {
     })
 }
 
-export const ContenidoController = {contenido_create,contenido_view,contenido_delete,contenido_update};
+export const ContenidoController = {contenido_create,contenido_view,contenido_delete,contenido_update,contenido_viewM,contenido_viewD};

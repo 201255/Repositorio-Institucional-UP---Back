@@ -24,7 +24,7 @@ const TesisDoctorado = getData.sequelizeClient.define('TesisDoc',{
         allowNull:false
     },
 },{
-   tableName: 'TesisDoc',
+tableName: 'TesisDoc',
 });
 
 

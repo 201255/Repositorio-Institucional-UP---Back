@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
-import { TesisMController } from '../controllers/TesisM.controller.js';
+import { tesisDocController } from '../controllers/TesisDoc.controller.js';
 
 const router = Router();
 
@@ -10,11 +10,11 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 /**
  * @openapi
- * '/api/tesisM/create_tesisM':
+ * '/api/tesisDoc/create_tesisDoc':
  *  post:
  *     tags:
- *     - tesisM
- *     summary: Crear tesislic
+ *     - tesisDoc
+ *     summary: Crear tesisDoc
  *     requestBody:
  *      required: true
  *      content:
@@ -49,7 +49,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  */
 
 
-router.post('/create_tesisM', (req, res) => TesisMController.tesisM_create(req, res));
+router.post('/create_tesisDoc', (req, res) => tesisDocController.tesisDoc_create(req, res));
 
 
 export default router;

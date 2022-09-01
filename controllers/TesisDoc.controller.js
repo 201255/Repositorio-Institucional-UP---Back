@@ -1,4 +1,4 @@
-import { getTesisM } from "../model/TesisM.model.js";
+import { getTesisDoctorado } from "../model/TesisDoc.model.js";
 import { Router } from "express";
 import { dataEnv } from '../config/envData.js';
 import bodyParser from "body-parser";
@@ -6,24 +6,24 @@ import bodyParser from "body-parser";
 const router = Router();
 
 
-const tesisM_create = async (req,res) => {
+const tesisDoc_create = async (req,res) => {
     const carrera = req.body.carrera;
     const directorTesis = req.body.directorTesis;
     const coDirector = req.body.coDirector;
     const ContenidoId = req.body.ContenidoId;
     
-    getTesisM.create({
+    getTesisDoctorado.create({
         carrera,
         directorTesis,
         coDirector,
         ContenidoId
     })
-        .then(TesisM => {
-            res.send(TesisM)
+        .then(TesisDoc => {
+            res.send(TesisDoc)
         })
         .catch(err => {
             console.log(err)
         })
 }
 
-export const TesisMController = {tesisM_create};
+export const tesisDocController = {tesisDoc_create};

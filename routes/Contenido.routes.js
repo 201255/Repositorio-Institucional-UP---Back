@@ -68,6 +68,40 @@ router.post('/create_contenido', (req, res) => ContenidoController.contenido_cre
  */
  router.get("/view", (req, res) => ContenidoController.contenido_view(req, res));
 
+ /**
+ * @openapi
+ * '/api/contenido/view_tesisM':
+ *  get:
+ *     tags:
+ *     - contenido
+ *     summary: visualizar Conetnido
+ *     responses:
+ *      200:
+ *        description: update
+ *      400:
+ *        description: Bad Request
+ *      404:
+ *        description: Not Found
+ */
+  router.get("/view_tesisM", (req, res) => ContenidoController.contenido_viewM(req, res));
+
+/**
+ * @openapi
+ * '/api/contenido/view_tesisDoc':
+ *  get:
+ *     tags:
+ *     - contenido
+ *     summary: visualizar Conetnido
+ *     responses:
+ *      200:
+ *        description: update
+ *      400:
+ *        description: Bad Request
+ *      404:
+ *        description: Not Found
+ */
+router.get("/view_tesisDoc", (req, res) => ContenidoController.contenido_viewD(req, res));
+
 /**
  * @openapi
  * '/api/contenido/delete_contenido':
@@ -141,5 +175,7 @@ router.post('/create_contenido', (req, res) => ContenidoController.contenido_cre
  *        description: Not Found
  */
 
- router.put('/update_contenido', (req,res) => ContenidoController.contenido_update(req,res));
+router.put('/update_contenido', (req,res) => ContenidoController.contenido_update(req,res));
+
+
 export default router;

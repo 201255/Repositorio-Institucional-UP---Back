@@ -38,7 +38,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  *                default: cdiaz@ids.upchiapas.edu.mx
  *              Password:
  *                type: string
- *                default: cdiaz@
+ *                default: cdiaz12345@
  *     responses:
  *      200:
  *        description: Create
@@ -72,7 +72,7 @@ router.post('/create', (req, res) => userController.user_create(req, res));
  *                default: cdiaz@ids.upchiapas.edu.mx
  *              Password:
  *                type: string
- *                default: cdiaz@
+ *                default: cdiaz12345@
  *     responses:
  *      200:
  *        description: Create
