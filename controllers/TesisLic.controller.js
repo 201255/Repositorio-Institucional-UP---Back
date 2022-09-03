@@ -26,4 +26,15 @@ const tesislic_create = async (req,res) => {
         })
 }
 
-export const TesisLicController = {tesislic_create};
+const tesislic_delete = async (req,res) => {
+    const IdTesisLic = req.body.IdTesisLic;
+    getTesisLic.destroy({where: {IdTesisLic:IdTesisLic}})
+    .then((r) => {
+        res.status(200).json({ message: "Deleted successfully" });
+    })
+    .catch((err) => {
+        res.status(400).send(err);
+    });
+}
+
+export const TesisLicController = {tesislic_create,tesislic_delete};

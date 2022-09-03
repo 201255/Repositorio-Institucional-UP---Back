@@ -48,7 +48,36 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  *        description: Not Found
  */
 
- router.post('/create_tesislic', (req, res) => TesisLicController.tesislic_create(req, res));
+router.post('/create_tesislic', (req, res) => TesisLicController.tesislic_create(req, res));
+
+/**
+ * @openapi
+ * '/api/tesislic/delete_tesislic':
+ *  delete:
+ *     tags:
+ *     - tesislic
+ *     summary: eliminar tesislic
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *           schema:
+ *            required:
+ *              - IdTesisLic
+ *            properties:
+ *              IdTesisLic:
+ *                type: string
+ *                default: id
+ *     responses:
+ *      200:
+ *        description: delete
+ *      400:
+ *        description: Bad Request
+ *      404:
+ *        description: Not Found
+ */
+
+router.delete('/delete_tesislic', (req, res) => TesisLicController.tesislic_delete(req, res));
 
 
 export default router;

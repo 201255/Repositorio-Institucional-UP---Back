@@ -80,5 +80,15 @@ const user_update = (req, res) => {
         });
 };
 
- 
-export const userController = { user_create, user_login, user_update};
+const user_view = async (req,res) => {
+    getusers.findAll({
+        attributes:['Id','carrera','nombreDirector']})
+    .then(users => {
+        res.send(users)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
+export const userController = { user_create, user_login, user_update,user_view};

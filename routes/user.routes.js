@@ -118,4 +118,23 @@ router.post('/login', (req, res) =>userController.user_login(req, res));
 
  router.put('/update_Password', (req, res) => userController.user_update(req, res));
 
+/**
+ * @openapi
+ * '/api/users/view_users':
+ *  get:
+ *     tags:
+ *     - users
+ *     summary: visualizar users
+ *     responses:
+ *      200:
+ *        description: view
+ *      400:
+ *        description: Bad Request
+ *      404:
+ *        description: Not Found
+ */
+
+ router.get('/view_users', (req, res) => userController.user_view(req, res));
+
+
 export default router;
