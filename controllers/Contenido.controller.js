@@ -2,28 +2,68 @@ import { getContenido } from "../model/Contenido.model.js";
 import { getTesisLic } from "../model/TesisLic.model.js";
 import { getTesisM } from "../model/TesisM.model.js";
 import { getTesisDoctorado } from "../model/TesisDoc.model.js";
+import multer from 'multer';
 
 import { Router } from "express";
 
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './assets')
+//     },
+//     filename: (req, file, cb) => {
+//         const ext = file.originalname.split('.').pop()
+//         // console.log(file.originalname)
+//         cb(null, `${Date.now()}.${ext}`)
+//     }
+// })
+
+// const upload = multer({ storage })
+
 const contenido_create = async (req,res) => {
+    // upload.single('enlaceDocumento');
+
     const titulo = req.body.titulo;
     const autor = req.body.autor;
+    const segundoAutor = req.body.segundoAutor;
     const fecha = req.body.fecha;
-    const enlaceDocumento = req.body.enlaceDocumento;
+    const enlaceDocumento = req.file.originalname;
+
+    // console.log(req.body.file)
 
     getContenido.create({
         titulo,
         autor,
+        segundoAutor,
         fecha,
-        enlaceDocumento
-    })
+        enlaceDocumento,
+    }, { fields: ['titulo','autor','segundoAutor','fecha','enlaceDocumento'] })
         .then(contenido => {
             res.send(contenido)
         })
         .catch(err => {
             console.log(err)
-        })
+        });
 }
+
+// const contenido_create = async (req,res) => {
+//     const titulo = req.body.titulo;
+//     const autor = req.body.autor;
+//     const fecha = req.body.fecha;
+//     const enlaceDocumento = req.body.enlaceDocumento;
+
+//     getContenido.create({
+//         titulo,
+//         autor,
+//         fecha,
+//         enlaceDocumento
+//     })
+//         .then(contenido => {
+//             res.send(contenido)
+//         })
+//         .catch(err => {
+//             console.log(err)
+//         })
+// }
 
 const contenido_view = async (req,res) => {
     getContenido.findAll({
@@ -31,7 +71,7 @@ const contenido_view = async (req,res) => {
             model: getTesisLic,
             attributes:['carrera','directorTesis','coDirector']
         },
-        attributes:['Id','titulo','autor', 'fecha', 'enlaceDocumento']})
+        attributes:['Id','titulo','autor','segundoAutor', 'fecha', 'enlaceDocumento']})
     .then(contenido => {
         res.send(contenido)
     })

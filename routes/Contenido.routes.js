@@ -1,12 +1,26 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
 import { ContenidoController } from '../controllers/Contenido.controller.js';
+import multer from 'multer';
 
 const router = Router();
 
 const jsonParser = bodyParser.json()
  
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './assets')
+},
+filename: (req, file, cb) => {
+    const ext = file.originalname.split('.').pop()
+    console.log(file.originalname)
+    cb(null, `${file.originalname}`)
+}
+});
+const upload = multer({ storage });
+
 
 /**
  * @openapi
@@ -18,12 +32,13 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  *     requestBody:
  *      required: true
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *           schema:
  *            type: object
  *            required:
  *              - titulo
  *              - autor
+ *              - segundoAutor
  *              - fecha
  *              - enlaceDocumento
  *            properties:
@@ -33,12 +48,16 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  *              autor:
  *                type: string
  *                default: Jesus Eduardo Jimenez
+ *              segundoAutor:
+ *                type: string
+ *                default: Luis Daniel Cruz
  *              fecha:
  *                type: string
  *                default: 27 de Agosto de 2022
  *              enlaceDocumento:
  *                type: string
- *                default: file:///C:/Users/USER/Desktop/8%20Cuatrimestre/IDS%205B_EQUIPO%201.pdf
+ *                format: binary                
+ *                default: enlaceDocumento
  *     responses:
  *      200:
  *        description: Create
@@ -48,7 +67,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
  *        description: Not Found
  */
 
-router.post('/create_contenido', (req, res) => ContenidoController.contenido_create(req, res));
+router.post('/create_contenido', upload.single('enlaceDocumento'), (req, res) => ContenidoController.contenido_create(req, res));
 
 
 /**
@@ -67,6 +86,8 @@ router.post('/create_contenido', (req, res) => ContenidoController.contenido_cre
  *        description: Not Found
  */
  router.get("/view", (req, res) => ContenidoController.contenido_view(req, res));
+
+
 
  /**
  * @openapi

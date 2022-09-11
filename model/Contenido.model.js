@@ -21,6 +21,10 @@ const Contenido = getData.sequelizeClient.define ('Contenido', {
         type: DataTypes.STRING,
         defaultValue:false,
     },
+    segundoAutor: {
+        type: DataTypes.STRING,
+        defaultValue:false,
+    },
     fecha :{
         type: DataTypes.STRING,
         defaultValue: false
