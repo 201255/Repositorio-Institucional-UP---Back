@@ -2,68 +2,60 @@ import { getContenido } from "../model/Contenido.model.js";
 import { getTesisLic } from "../model/TesisLic.model.js";
 import { getTesisM } from "../model/TesisM.model.js";
 import { getTesisDoctorado } from "../model/TesisDoc.model.js";
-import multer from 'multer';
+import fs from 'fs';
+import {fileURLToPath} from 'url';
+import path from "path";
+
+
+
 
 import { Router } from "express";
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './assets')
-//     },
-//     filename: (req, file, cb) => {
-//         const ext = file.originalname.split('.').pop()
-//         // console.log(file.originalname)
-//         cb(null, `${Date.now()}.${ext}`)
-//     }
-// })
-
-// const upload = multer({ storage })
-
 const contenido_create = async (req,res) => {
-    // upload.single('enlaceDocumento');
-
     const titulo = req.body.titulo;
     const autor = req.body.autor;
-    const segundoAutor = req.body.segundoAutor;
     const fecha = req.body.fecha;
+    const segundoAutor = req.body.segundoAutor
     const enlaceDocumento = req.file.originalname;
-
-    // console.log(req.body.file)
 
     getContenido.create({
         titulo,
         autor,
-        segundoAutor,
         fecha,
         enlaceDocumento,
-    }, { fields: ['titulo','autor','segundoAutor','fecha','enlaceDocumento'] })
+        segundoAutor
+    })
         .then(contenido => {
             res.send(contenido)
         })
         .catch(err => {
             console.log(err)
-        });
+        })
 }
 
-// const contenido_create = async (req,res) => {
-//     const titulo = req.body.titulo;
-//     const autor = req.body.autor;
-//     const fecha = req.body.fecha;
-//     const enlaceDocumento = req.body.enlaceDocumento;
 
-//     getContenido.create({
-//         titulo,
-//         autor,
-//         fecha,
-//         enlaceDocumento
-//     })
-//         .then(contenido => {
-//             res.send(contenido)
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
+const contenido_viewPDF = (function (req,res)  {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    let reqP = path.join(__dirname, "../")
+    console.log("data"+reqP)
+    let img =reqP+`\\assets\\1.pdf`;
+
+    fs.access(img, fs.constants.F_OK, err => {
+        console.log(`${img} ${err ? "no existe" : "no existe"} `)
+    });
+
+    fs.readFile(img, function(err,data){
+        if(err){
+            res.writeHead(404, {'Content-Type' : 'text/plane'});
+            return res.end('404 not found')
+        }else{
+            res.writeHead(200, {'Content-Type' : 'application/pdf'});
+            res.write(data);
+            return res.end();
+        }
+    })
+})
 
 const contenido_view = async (req,res) => {
     getContenido.findAll({
@@ -71,7 +63,7 @@ const contenido_view = async (req,res) => {
             model: getTesisLic,
             attributes:['carrera','directorTesis','coDirector']
         },
-        attributes:['Id','titulo','autor','segundoAutor', 'fecha', 'enlaceDocumento']})
+        attributes:['Id','titulo','autor', 'fecha', 'enlaceDocumento']})
     .then(contenido => {
         res.send(contenido)
     })
@@ -138,4 +130,4 @@ const contenido_update = async (req,res) => {
     })
 }
 
-export const ContenidoController = {contenido_create,contenido_view,contenido_delete,contenido_update,contenido_viewM,contenido_viewD};
+export const ContenidoController = {contenido_create,contenido_view,contenido_delete,contenido_update,contenido_viewM,contenido_viewD,contenido_viewPDF};

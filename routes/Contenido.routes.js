@@ -87,6 +87,8 @@ router.post('/create_contenido', upload.single('enlaceDocumento'), (req, res) =>
  */
  router.get("/view", (req, res) => ContenidoController.contenido_view(req, res));
 
+ router.get("/view_pdf", (req, res) => ContenidoController.contenido_viewPDF(req, res));
+
 
 
  /**
