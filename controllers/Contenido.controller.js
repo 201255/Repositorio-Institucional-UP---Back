@@ -35,14 +35,15 @@ const contenido_create = async (req,res) => {
 
 
 const contenido_viewPDF = (function (req,res)  {
+    let pdf = req.query.pdf;
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     let reqP = path.join(__dirname, "../")
     console.log("data"+reqP)
-    let img =reqP+`\\assets\\1.pdf`;
+    let img =reqP+`\\assets\\${pdf}`;
 
     fs.access(img, fs.constants.F_OK, err => {
-        console.log(`${img} ${err ? "no existe" : "no existe"} `)
+        console.log(`${img} ${err ? "no existe" : "existe"} `)
     });
 
     fs.readFile(img, function(err,data){
